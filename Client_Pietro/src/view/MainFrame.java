@@ -125,7 +125,10 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removeClient(table.getSelectedRow());
+				int selectedRow = table.getSelectedRow();
+				ClientTableModel model = (ClientTableModel) table.getModel();
+				Client client = model.getRow(selectedRow);
+				removeClient(client, table.getSelectedRow());
 			}
 		});
 
@@ -197,8 +200,9 @@ public class MainFrame extends JFrame {
 	/**
 	 * Remove um cliente.
 	 */
-	private void removeClient(int selectedRow) {
+	private void removeClient(Client client, int selectedRow) {
 		ClientTableModel model = (ClientTableModel) table.getModel();
+		ClientDao.delete(client);
 		model.removeClient(selectedRow);
 	}
 

@@ -28,7 +28,7 @@ public class ClientDao {
 		Connection con = ConnectionFactory.getConnection();
 		try {
 			PreparedStatement ps = 
-					con.prepareStatement("UPDATE client SET nome = ? WHERE cpf = ?");
+					con.prepareStatement("UPDATE client SET name = ? WHERE cpf = ?");
 			ps.setString(1, client.getName());
 			ps.setString(2, client.getCpf());
 			ps.executeUpdate();
@@ -55,13 +55,13 @@ public class ClientDao {
 	
 	public static ArrayList<Client> select() {
 		Connection con = ConnectionFactory.getConnection();
-		ArrayList<Client> clientArrayList = new ArrayList<Client>();
+		ArrayList<Client> clientArrayList = new ArrayList<>();
 		try {
 			PreparedStatement ps = 
 					con.prepareStatement("SELECT * FROM client");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				clientArrayList.add(new Client(rs.getString("nome"), rs.getString("cpf"), null));
+				clientArrayList.add(new Client(rs.getString("name"), rs.getString("cpf"), null));
 			}
 			rs.close();
 			ps.close();
@@ -69,11 +69,5 @@ public class ClientDao {
 			e.printStackTrace();
 		}
 		return clientArrayList;
-	}
-	
-	public static void main(String[] args) {
-		for (int i = 0; i < 4; i++) {
-			System.out.println(select().get(i));
-		}
 	}
 }
