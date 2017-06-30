@@ -1,4 +1,4 @@
-package view;
+		package view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,13 @@ public class ClientTableModel extends DefaultTableModel {
 
 	private String[] columnNames = { "Nome", "CPF", "Data de Nascimento" };
 	
-	private List<Client> clients = new ArrayList<>();
-
+	private List<Client> clients = new ArrayList<Client>();
+	
+	public ClientTableModel(){
+		refresh();
+	}
+			
+			
 	@Override
 	public int getColumnCount() {
 		return columnNames.length;
@@ -98,6 +103,14 @@ public class ClientTableModel extends DefaultTableModel {
 	public void removeClient(int selectedRow) {
 		clients.remove(selectedRow);
 		this.removeRow(selectedRow);
+	}
+	
+	public void refresh(){
+		for (int i = 0; i < ClientDao.select().size(); i++) {
+			
+			addClient(ClientDao.select().get(i));
+			
+		}
 	}
 
 }
